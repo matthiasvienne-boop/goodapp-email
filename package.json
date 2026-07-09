@@ -1,0 +1,33 @@
+{
+  "name": "@goodapp/email",
+  "version": "0.1.0",
+  "private": false,
+  "license": "MIT",
+  "description": "Shared Resend client singleton, email-sending abstraction, and HTML layout helpers for GoodApp products.",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/matthiasvienne-boop/goodapp-email.git"
+  },
+  "homepage": "https://github.com/matthiasvienne-boop/goodapp-email#readme",
+  "bugs": {
+    "url": "https://github.com/matthiasvienne-boop/goodapp-email/issues"
+  },
+  "type": "commonjs",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "files": [
+    "dist"
+  ],
+  "scripts": {
+    "build": "tsc",
+    "prepare": "npm run build"
+  },
+  "peerDependencies": {
+    "resend": ">=6.12.0"
+  },
+  "devDependencies": {
+    "@types/node": "^20.12.7",
+    "resend": "^6.12.4",
+    "typescript": "^5.6.3"
+  }
+}
