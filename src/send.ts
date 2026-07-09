@@ -48,6 +48,18 @@ function sleep(ms: number): Promise<void> {
   return new Promise((resolve) => setTimeout(resolve, ms));
 }
 
+// Resend's SDK returns API errors as plain objects ({statusCode, name, message}),
+// not Error instances — only thrown network/runtime failures are real Errors.
+// Extract .message from either shape rather than falling through to
+// String(err), which produces the useless "[object Object]" for the former.
+function extractErrorMessage(err: unknown): string {
+  if (err instanceof Error) return err.message;
+  if (err && typeof err === "object" && "message" in err && typeof (err as { message: unknown }).message === "string") {
+    return (err as { message: string }).message;
+  }
+  return String(err);
+}
+
 export async function sendEmail(options: SendEmailOptions): Promise<SendEmailResult> {
   const log = options.logger ?? console;
   const apiKey = options.apiKey ?? process.env.RESEND_API_KEY;
@@ -90,6 +102,5 @@ export async function sendEmail(options: SendEmailOptions): Promise<SendEmailRes
     if (attempt < attempts) await sleep(delayMs);
   }
 
-  const message = lastError instanceof Error ? lastError.message : String(lastError);
-  return { ok: false, error: message };
+  return { ok: false, error: extractErrorMessage(lastError) };
 }
