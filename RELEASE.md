@@ -47,3 +47,25 @@ Everything in `@goodapp/observability`'s `RELEASE.md` still applies. Two additio
 
 1. **Verify duplication byte-for-byte before extracting a shared template/layout function**, not just "looks similar." Two of Veynoris' three layout functions were extractable because a direct string comparison proved them identical except one sentence; the third had real differences that would have been silently lost (or the shared function bloated with unnecessary parameters) if extraction had gone ahead on a "looks close enough" read. Write the comparison as an actual test — string equality against the original source, run before any production file is touched — not a visual skim.
 2. **A package with a class-typed dependency (anything with private members, not just interfaces) needs its own `node_modules` removed before a consumer typechecks it via `file:`.** This isn't specific to `resend` — any dependency shaped like this will hit the same nominal-typing conflict during local `file:` testing. Document it in the package's own README so the next person (or agent) doesn't have to rediscover it.
+
+## 0.2.0 — breedte op `renderEmailShell`
+
+`EmailShellOptions.breedte?: number`, standaard 560. Toegevoegd voor de Founder
+Daily (FOS-73): een intern rapport met tabellen erin dat op 560 pixels lang en
+smal wordt. Klantmails blijven op 560 — daar is smal juist goed.
+
+Een getal en geen percentage: Outlook rekent percentages binnen een geneste
+tabel niet betrouwbaar uit, en dit ís een geneste tabel.
+
+**Niet-brekend, en dat is hier getoetst in plaats van beloofd.** Dit document
+stelde dat `renderEmailShell` byte-voor-byte geverifieerd was tegen de
+layoutfuncties die ze verving, maar er stond geen enkele test naast om dat vast
+te houden. Die staan er nu: `test/shell.test.js`, met een snapshot van de
+560-uitvoer.
+
+Dat snapshot is er na een eigen misser. De eerste drie toetsen vergeleken twee
+aanroepen met elkáár en bleven groen toen ik de padding van de kop veranderde —
+ze vingen een verkeerde breedte, maar niet een wijziging die béíde raakt. Het
+snapshot vangt dat wel. Wordt het rood en is de wijziging bedoeld, dan hoort het
+mee te veranderen in dezelfde commit, met in de boodschap waarom elke klantmail
+van drie producten er anders uit gaat zien.
