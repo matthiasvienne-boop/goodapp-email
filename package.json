@@ -1,6 +1,6 @@
 {
   "name": "@goodapp/email",
-  "version": "0.1.1",
+  "version": "0.2.0",
   "private": false,
   "license": "MIT",
   "description": "Shared Resend client singleton, email-sending abstraction, and HTML layout helpers for GoodApp products.",
@@ -20,7 +20,8 @@
   ],
   "scripts": {
     "build": "tsc",
-    "prepare": "npm run build"
+    "prepare": "npm run build",
+    "test": "npm run build && node --test test/"
   },
   "peerDependencies": {
     "resend": ">=6.12.0"
