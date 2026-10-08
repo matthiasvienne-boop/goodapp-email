@@ -25,6 +25,11 @@ export interface SendEmailOptions {
   apiKey?: string;
   from: string;
   to: string | string[];
+  /**
+   * Blind carbon copy (PLAT-278). Optioneel; zonder dit veld verandert er niets aan de aanroep naar Resend.
+   * De ontvangers in `bcc` zien elkaar en de ontvangers in `to` niet, en worden bewust niet gelogd.
+   */
+  bcc?: string | string[];
   subject: string;
   html?: string;
   text?: string;
@@ -79,6 +84,8 @@ export async function sendEmail(options: SendEmailOptions): Promise<SendEmailRes
       const result = await resend.emails.send({
         from: options.from,
         to: options.to,
+        // Alleen meesturen als het gevraagd is: een aanroep zonder bcc blijft byte-voor-byte dezelfde als vóór 0.3.0.
+        ...(options.bcc !== undefined ? { bcc: options.bcc } : {}),
         subject: options.subject,
         html: options.html,
         text: options.text,
