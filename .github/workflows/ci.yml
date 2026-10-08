@@ -15,6 +15,6 @@ jobs:
     permissions:
       contents: read
       statuses: write
-    uses: matthiasvienne-boop/goodapp-ci/.github/workflows/ci.yml@main
+    uses: matthiasvienne-boop/goodapp-ci/.github/workflows/ci.yml@08c38b7086b88e569eb59a9e60afb69c67664953
     with:
       test-command: npm test

@@ -9,4 +9,4 @@ permissions:
   statuses: read
 jobs:
   controle:
-    uses: matthiasvienne-boop/goodapp-ci/.github/workflows/productiecontrole.yml@main
+    uses: matthiasvienne-boop/goodapp-ci/.github/workflows/productiecontrole.yml@08c38b7086b88e569eb59a9e60afb69c67664953
