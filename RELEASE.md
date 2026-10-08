@@ -69,3 +69,21 @@ ze vingen een verkeerde breedte, maar niet een wijziging die béíde raakt. Het
 snapshot vangt dat wel. Wordt het rood en is de wijziging bedoeld, dan hoort het
 mee te veranderen in dezelfde commit, met in de boodschap waarom elke klantmail
 van drie producten er anders uit gaat zien.
+
+## 0.3.0 — `bcc` op `sendEmail`
+
+`SendEmailOptions.bcc?: string | string[]` (PLAT-278, aanvraag van de Stroombuddy-sessie
+voor STROOM-391). Wordt doorgegeven aan `resend.emails.send()`.
+
+**Niet-brekend.** Zonder `bcc` bevat de aanroep naar Resend geen `bcc`-sleutel: de
+payload is identiek aan 0.2.0. Dat is getoetst (`test/send-bcc.test.js`), want de belofte
+bovenaan dit document is dat `sendEmail` zonder opties nooit van gedrag verandert.
+
+**Het `bcc`-adres wordt niet gelogd**, ook niet bij een mislukte poging, en een retry stuurt
+het opnieuw mee. Wie `bcc` gebruikt om een kopie naar zichzelf te sturen, moet het adres
+dus niet óók in `to` zetten: dan ziet de ontvanger het.
+
+`npm test` draaide `node --test test/`, en een map als argument werkt niet meer op Node 24
+(het pakket pint Node 20). Het script noemt nu `test/*.test.js`.
+
+Consumenten pinnen op de commit-SHA na de merge; zie de releasechecklist hierboven.
