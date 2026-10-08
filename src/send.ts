@@ -27,7 +27,7 @@ export interface SendEmailOptions {
   to: string | string[];
   /**
    * Blind carbon copy (PLAT-278). Optioneel; zonder dit veld verandert er niets aan de aanroep naar Resend.
-   * De ontvangers in `bcc` zien elkaar en de ontvangers in `to` niet, en worden bewust niet gelogd.
+   * Een bcc-ontvanger is niet zichtbaar voor de ontvangers in `to`. Het adres wordt bewust niet gelogd.
    */
   bcc?: string | string[];
   subject: string;
