@@ -1,0 +1,12 @@
+# Proef (PLAT-282): controle op de branch production. Groen alleen als precies deze commit
+# eerder als kandidaat is gevalideerd.
+name: productie
+on:
+  push:
+    branches: [production]
+permissions:
+  contents: read
+  statuses: read
+jobs:
+  controle:
+    uses: matthiasvienne-boop/goodapp-ci/.github/workflows/productiecontrole.yml@main

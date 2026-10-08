@@ -1,0 +1,20 @@
+# Proef CI (PLAT-282): de zware controle draait één keer per release, op een kandidaatbranch.
+# Pushes naar main en featurebranches starten niets.
+name: ci
+on:
+  push:
+    branches: ["candidate/**"]
+  workflow_dispatch:
+concurrency:
+  group: ci-${{ github.ref }}
+  cancel-in-progress: true
+permissions:
+  contents: read
+jobs:
+  kandidaat:
+    permissions:
+      contents: read
+      statuses: write
+    uses: matthiasvienne-boop/goodapp-ci/.github/workflows/ci.yml@main
+    with:
+      test-command: npm test
